@@ -1,6 +1,10 @@
-function Login() {
+import React from "react";
+import { useNavigate } from 'react-router-dom'
+
+  const login = async () => {
+    const navigate = useNavigate()
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-10">
+    <div className="flex justify-center items-center min-h-screen bg-green-100 pt-10">
       <div className="bg-gray-100 flex rounded-xl shadow-lg max-w-3xl p-5">
         
     
@@ -18,14 +22,14 @@ function Login() {
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-2 mb-4 border border-gray-300 rounded-xl"
+              className="w-full p-2 mb-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-800"
             />
             <input
               type="password"
               placeholder="Password"
-              className="w-full p-2 mb-4 border border-gray-300 rounded-xl"
+              className="w-full p-2 mb-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-800"
             />
-            <button
+            <button onClick={()=>navigate('/Dashboard')}
               type="submit"
               className="w-full bg-green-800 text-white p-2 rounded-xl hover:bg-green-900"
             >
@@ -39,9 +43,18 @@ function Login() {
             <div className="flex-grow border-t border-gray-300" />
           </div>
 
+          <p onClick={()=>navigate('/ResetPassword')} 
+           className="text-sm">
+            <a href="#" className="text-green-800 font-semibold hover:underline">
+            Forget Password
+            </a>
+          </p>
+            
+
           <p className="text-sm">
             Don’t have an account?{' '}
-            <a href="#" className="text-green-800 font-semibold hover:underline">
+            <a onClick={()=>navigate('/register')}
+            href="#" className="text-green-800 font-semibold hover:underline">
               Register
             </a>
           </p>
@@ -50,4 +63,5 @@ function Login() {
     </div>
   );
 }
-export default Login;
+
+export default login;
