@@ -1,18 +1,55 @@
-function SelectAxis({ columns, onAxisChange }) {
+function SelectAxis({ columns, onAxisChange, chartMode }) {
   return (
-    <div className="space-y-2">
-      <select onChange={(e) => onAxisChange("x", e.target.value)}>
-        <option>X-Axis</option>
-        {columns.map((col) => <option key={col}>{col}</option>)}
-      </select>
-      <select onChange={(e) => onAxisChange("y", e.target.value)}>
-        <option>Y-Axis</option>
-        {columns.map((col) => <option key={col}>{col}</option>)}
-      </select>
-      <select onChange={(e) => onAxisChange("z", e.target.value)}>
-        <option>Z-Axis (3D only)</option>
-        {columns.map((col) => <option key={col}>{col}</option>)}
-      </select>
+    <div className="flex flex-wrap gap-4">
+      {/* X Axis */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">X Axis</label>
+        <select
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+          onChange={(e) => onAxisChange("x", e.target.value)}
+        >
+          <option value="">Select X Axis</option>
+          {columns.map((col) => (
+            <option key={col} value={col}>
+              {col}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Y Axis */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Y Axis</label>
+        <select
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+          onChange={(e) => onAxisChange("y", e.target.value)}
+        >
+          <option value="">Select Y Axis</option>
+          {columns.map((col) => (
+            <option key={col} value={col}>
+              {col}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Z Axis (Only for 3D) */}
+      {chartMode === "3D" && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Z Axis (Optional)</label>
+          <select
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+            onChange={(e) => onAxisChange("z", e.target.value)}
+          >
+            <option value="">(Optional) Select Z Axis</option>
+            {columns.map((col) => (
+              <option key={col} value={col}>
+                {col}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
     </div>
   );
 }
