@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as XLSX from "xlsx";
+import axios from "axios"; // Add axios for HTTP requests
 import { useNavigate } from "react-router-dom";
 
 function UploadExcel() {
@@ -9,31 +9,39 @@ function UploadExcel() {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    setMessage(""); // Clear message on new file select
+    setMessage("");
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!file) {
       setMessage("⚠️ Please select an Excel file to upload.");
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const data = new Uint8Array(event.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const parsedData = XLSX.utils.sheet_to_json(worksheet);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      // Optional: add user info, e.g., formData.append("user", "guest");
 
-      if (parsedData.length > 0) {
-        navigate("/dashboard/chart", { state: { data: parsedData } });
+      // Send file to backend
+      const response = await axios.post("http://localhost:5000/api/upload-excel", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      const data = response.data.data;
+
+      if (data && data.length > 0) {
+        // Navigate to dashboard and pass parsed data
+        navigate("/dashboard/chart", { state: { data } });
       } else {
-        setMessage("⚠️ Parsed Excel file is empty.");
+        setMessage("⚠️ Uploaded Excel file is empty.");
       }
-    };
-
-    reader.readAsArrayBuffer(file);
+    } catch (error) {
+      console.error("Upload error:", error);
+      setMessage("❌ Failed to upload file.");
+    }
   };
 
   return (

@@ -98,7 +98,7 @@ function Login() {
             <div className="flex-grow border-t border-gray-300" />
           </div>
 
-          <p onClick={() => navigate('/ResetPassword')} className="text-sm">
+          <p onClick={() => navigate('/forgetpassword')} className="text-sm">
             <a className="text-green-800 font-semibold hover:underline">Forget Password</a>
           </p>
 

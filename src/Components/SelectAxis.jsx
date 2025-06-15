@@ -33,15 +33,15 @@ function SelectAxis({ columns, onAxisChange, chartMode }) {
         </select>
       </div>
 
-      {/* Z Axis (Only for 3D) */}
+      {/* Z Axis (only if 3D is selected) */}
       {chartMode === "3D" && (
         <div>
-          <label className="block text-sm font-medium text-gray-700">Z Axis (Optional)</label>
+          <label className="block text-sm font-medium text-gray-700">Z Axis</label>
           <select
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
             onChange={(e) => onAxisChange("z", e.target.value)}
           >
-            <option value="">(Optional) Select Z Axis</option>
+            <option value="">Select Z Axis</option>
             {columns.map((col) => (
               <option key={col} value={col}>
                 {col}
@@ -53,4 +53,5 @@ function SelectAxis({ columns, onAxisChange, chartMode }) {
     </div>
   );
 }
+
 export default SelectAxis;
